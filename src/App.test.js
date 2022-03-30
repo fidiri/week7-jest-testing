@@ -1,4 +1,4 @@
-import { add, total, highestScore } from './App';
+import { todos, addTodo, eraseTodo, update } from './App';
 
 // https://jestjs.io/docs/expect#expectvalue
 // The expect function is used every time you want to test a value.
@@ -19,42 +19,47 @@ import { add, total, highestScore } from './App';
 */
 
 
-// Unit test - only tests one thing
-// test add function
-test('add - if function defined?', () => {
-  expect(add).toBeDefined(); 
-});
-
-// test add function
-test('add - is function returning a value?', () => {
-  expect(add(1, 2)).toBeDefined();
-});
-
-// test add function
-test('add - verify correct return values', () => {
-  expect(add(1, 2)).toBe(3); // function returns 3; toBe is a matcher (===)
-  expect(add(5, 2)).toBe(7);
-});
-
-// test highestScore function
-test('highest score', () => { 
-  const students = [
-    { name: 'Shane Carey', score: 9.5 },
-    { name: 'Rebecca Mills', score: 8.7 },
-    { name: 'Derek Myers', score: 9.1 },
+// test todos function
+test('Outputs array of objects -exist, returns a value, and returns the correct value', () => {
+  const expectOne = [
+    { id: 1, text: 'wake up', isCompleted: false },
+    { id: 2, text: 'take a shower', isCompleted: false },
+    { id: 3, text: 'have breakfast', isCompleted: false },
+    { id: 4, text: 'go to work', isCompleted: true }
   ];
-  const result = highestScore(students);
-  expect(result).toEqual({ name: 'Shane Carey', score: 9.5 });
+  expect(todos()).toBeDefined();
+  expect(todos()).toEqual(expectOne);
 });
 
 
-// Integration test - testing a function that relies on another function (multiple things)
-//  - testing add() then total() function
-//  - benefit of more detailed function testing
-test('total', () => {
-  expect(total(5, 20)).toBe('$25');
-  expect(total(2, 10)).toBe('$12');
-  expect(total(8, 50)).toBe('$58');
+describe('arrayContaining', () => {
+  const expectedTwo = [{ id: 5, text: 'exercise', isCompleted: false }];
+  
+  it('Adds object to array -exist, returns a value, and returns the correct value', () => {
+    expect(addTodo('exercise', 5)).toEqual(expect.arrayContaining(expectedTwo));
+    expect(addTodo('shopping', 5)).toBeDefined();
+  });
+});
+
+describe('not.arrayContaining', () => {
+  const expected = [{ id: 4, text: 'go to work', isCompleted: true }];
+
+  it('Erases object from array -exist, returns a value, and returns the correct value', () => {
+    expect(eraseTodo(4)).toEqual(expect.not.arrayContaining(expected),);
+    expect(eraseTodo(4)).toBeDefined();
+  });
+});
+
+// test update function
+test('Updates and array of objects -exist, returns a value, and returns the correct value', () => {
+  const arrObjTwo = [
+    { id: 1, text: 'wake up', isCompleted: false },
+    { id: 2, text: 'take a shower', isCompleted: false },
+    { id: 3, text: 'have breakfast', isCompleted: false },
+    { id: 4, text: 'go to work', isCompleted: true }
+  ]
+  expect(update(3, 'have breakfast')).toEqual(arrObjTwo);
+  expect(update(3, 'have breakfast')).toBeDefined();
 });
 const {generateText } = require('./app');
 test('should output name and age' , () => {

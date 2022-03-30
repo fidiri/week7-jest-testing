@@ -56,3 +56,8 @@ test('total', () => {
   expect(total(2, 10)).toBe('$12');
   expect(total(8, 50)).toBe('$58');
 });
+const {generateText } = require('./app');
+test('should output name and age' , () => {
+  const text = generateText('Max', 29);
+  expect();
+});

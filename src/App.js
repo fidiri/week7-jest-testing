@@ -20,3 +20,7 @@ export function highestScore(students) {
   
     return result;
   }
+  exports.generateText = (name, age) => {
+    //return output text
+    return '${name} (${age} years old)';
+  };
